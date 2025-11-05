@@ -1,5 +1,4 @@
-This the assignment 4 for 
+# CS 3354 – Assignment 4: Automated Unit Test Generation
 
-Poojith Sureshkumar, Prabhas Gade, and Siddharth Pothini
-
-All the official final test files are within test/ 
+### Team Members
+- Samarth Bikki (NetID: scb230002)
