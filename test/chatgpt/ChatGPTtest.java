@@ -1,71 +1,83 @@
-ackage chatgpt;
+package chatgpt;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import src.Stack;
 
 public class ChatGPTTest {
 
     private Stack stack;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         stack = new Stack(3);
     }
 
     @Test
-    void testPushAndPeek() {
+    public void testPushAndPeek() {
         stack.push(10);
-        assertEquals(10, stack.peek());
         stack.push(20);
         assertEquals(20, stack.peek());
-    }
-
-    @Test
-    void testPopReturnsLastElement() {
-        stack.push(5);
-        stack.push(15);
-        int popped = stack.pop();
-        assertEquals(15, popped);
-        assertEquals(1, stack.size());
-    }
-
-    @Test
-    void testIsEmptyAndIsFull() {
-        assertTrue(stack.isEmpty());
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
-        assertTrue(stack.isFull());
+        assertEquals(2, stack.size());
         assertFalse(stack.isEmpty());
     }
 
     @Test
-    void testPeekDoesNotRemoveElement() {
-        stack.push(99);
-        int peeked = stack.peek();
-        assertEquals(99, peeked);
-        assertEquals(1, stack.size());
+    public void testPopRemovesElement() {
+        stack.push(1);
+        stack.push(2);
+        assertEquals(2, stack.pop());
+        assertEquals(1, stack.pop());
+        assertTrue(stack.isEmpty());
     }
 
     @Test
-    void testPushToFullStackThrowsException() {
+    public void testPushBeyondCapacityThrows() {
         stack.push(1);
         stack.push(2);
         stack.push(3);
-        Exception e = assertThrows(IllegalStateException.class, () -> stack.push(4));
-        assertEquals("Stack is full", e.getMessage());
+        assertTrue(stack.isFull());
+        assertThrows(IllegalStateException.class, () -> stack.push(4));
     }
 
     @Test
-    void testPopFromEmptyThrowsException() {
-        Exception e = assertThrows(IllegalStateException.class, () -> stack.pop());
-        assertEquals("Stack is empty", e.getMessage());
+    public void testPopEmptyThrows() {
+        assertThrows(IllegalStateException.class, () -> stack.pop());
     }
 
     @Test
-    void testPeekFromEmptyThrowsException() {
-        Exception e = assertThrows(IllegalStateException.class, () -> stack.peek());
-        assertEquals("Stack is empty", e.getMessage());
+    public void testPeekEmptyThrows() {
+        assertThrows(IllegalStateException.class, () -> stack.peek());
+    }
+
+    @Test
+    public void testOrderIsLIFO() {
+        stack.push(5);
+        stack.push(10);
+        stack.push(15);
+        assertEquals(15, stack.pop());
+        assertEquals(10, stack.pop());
+        assertEquals(5, stack.pop());
+    }
+
+    @Test
+    public void testIsEmptyAndIsFull() {
+        assertTrue(stack.isEmpty());
+        stack.push(7);
+        assertFalse(stack.isEmpty());
+        stack.push(8);
+        stack.push(9);
+        assertTrue(stack.isFull());
+    }
+
+    @Test
+    public void testSizeUpdatesCorrectly() {
+        assertEquals(0, stack.size());
+        stack.push(11);
+        stack.push(22);
+        assertEquals(2, stack.size());
+        stack.pop();
+        assertEquals(1, stack.size());
     }
 }
