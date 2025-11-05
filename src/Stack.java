@@ -1,5 +1,3 @@
-package src;
-
 public class Stack {
     private int[] stack;
     private int top;
@@ -65,3 +63,4 @@ public class Stack {
         System.out.println("Is empty: " + s.isEmpty());
     }
 }
+
