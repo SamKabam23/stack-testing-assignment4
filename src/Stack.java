@@ -1,3 +1,5 @@
+package src;
+
 public class Stack {
     private int[] stack;
     private int top;
